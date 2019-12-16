@@ -31,5 +31,8 @@
   - name: 'env: bash'
     lineinfile:
       path: '~/.bashrc'
-      line: 'export PATH="{{ bin }}:${PATH}"'
+      line: '{{ item }}'
+    with_items:
+    - 'export PATH="{{ bin }}:${PATH}"'
+    - 'export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"'
     
