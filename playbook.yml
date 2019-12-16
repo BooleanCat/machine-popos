@@ -1,8 +1,35 @@
 ---
 - hosts: 'all'
+  vars:
+    bin: '{{ ansible_env.PWD }}/bin'
+    install: '{{ ansible_env.PWD }}/install'
   tasks:
   - name: 'apt: update'
     apt:
       update_cache: true
     become: true
+
+  - name: 'apt: install'
+    apt:
+      name:
+      - 'ssh-askpass'
+      state: 'latest'
+    become: true
+
+  - name: 'brew: install'
+    homebrew:
+      name:
+      - 'jq'
+      - 'ansible'
+      state: 'latest'
+
+  - name: '1password-cli'
+    shell: '{{ install }}/1password-cli.bash'
+    register: 'op_shell'
+    changed_when: '"already installed" not in op_shell.stdout'
+
+  - name: 'env: bash'
+    lineinfile:
+      path: '~/.bashrc'
+      line: 'export PATH="{{ bin }}:${PATH}"'
     
