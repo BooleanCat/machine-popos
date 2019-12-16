@@ -17,9 +17,35 @@
       state: 'latest'
     become: true
 
+  - name: 'docker: dependencies'
+    apt:
+      name:
+      - 'apt-transport-https'
+      - 'ca-certificates'
+      - 'curl'
+      - 'software-properties-common'
+      state: 'latest'
+    become: true
+  - name: 'docker: key'
+    apt_key:
+      url: 'https://download.docker.com/linux/ubuntu/gpg'
+      id: '9DC858229FC7DD38854AE2D88D81803C0EBFCD88'
+    become: true
+  - name: 'docker: repository'
+    apt_repository:
+      repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu disco stable'
+      update_cache: true
+    become: true
+  - name: 'docker'
+    apt:
+      name: 'docker-ce'
+      state: 'latest'
+    become: true
+
   - name: 'brew: install'
     homebrew:
       name:
+      - 'gcc'
       - 'jq'
       - 'ansible'
       - 'neovim'
@@ -27,6 +53,10 @@
       - 'tmux'
       - 'ripgrep'
       - 'go'
+      - 'rustup-init'
+      - 'lua'
+      - 'luarocks'
+      - 'direnv'
       state: 'latest'
 
   - name: '1password-cli'
@@ -50,4 +80,5 @@
     - 'export GOROOT="{{ cellar }}/go/$( go version | rg -o "1\.\d+(\.\d+)?" )/libexec"'
     - 'export GOPATH="${HOME}/go"'
     - 'export PATH="${GOPATH}/bin:${PATH}"'
+    - 'eval "$( direnv hook bash )"'
     
