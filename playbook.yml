@@ -3,6 +3,7 @@
   vars:
     bin: '{{ ansible_env.PWD }}/bin'
     install: '{{ ansible_env.PWD }}/install'
+    cellar: '/home/linuxbrew/.linuxbrew/Cellar'
   tasks:
   - name: 'apt: update'
     apt:
@@ -21,12 +22,22 @@
       name:
       - 'jq'
       - 'ansible'
+      - 'neovim'
+      - 'shellcheck'
+      - 'tmux'
+      - 'ripgrep'
+      - 'go'
       state: 'latest'
 
   - name: '1password-cli'
     shell: '{{ install }}/1password-cli.bash'
     register: 'op_shell'
     changed_when: '"already installed" not in op_shell.stdout'
+
+  - name: 'golangci-lint'
+    shell: '{{ install }}/golangci-lint.bash'
+    register: 'golangci_lint_shell'
+    changed_when: '"already installed" not in golangci_lint_shell.stdout'
 
   - name: 'env: bash'
     lineinfile:
@@ -35,4 +46,8 @@
     with_items:
     - 'export PATH="{{ bin }}:${PATH}"'
     - 'export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"'
+    - 'export EDITOR="nvim"'
+    - 'export GOROOT="{{ cellar }}/go/$( go version | rg -o "1\.\d+(\.\d+)?" )/libexec"'
+    - 'export GOPATH="${HOME}/go"'
+    - 'export PATH="${GOPATH}/bin:${PATH}"'
     
