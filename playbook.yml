@@ -41,6 +41,16 @@
       name: 'docker-ce'
       state: 'latest'
     become: true
+  - name: 'docker: docker-compose'
+    shell: '{{ install }}/docker-compose.bash'
+    register: 'docker_compose_shell'
+    changed_when: '"already installed" not in docker_compose_shell.stdout'
+  - name: 'docker: permission'
+    user:
+      name: '{{ ansible_user_id }}'
+      groups: ['docker']
+      append: true
+    become: true
 
   - name: 'brew: install'
     homebrew:
@@ -57,6 +67,7 @@
       - 'lua'
       - 'luarocks'
       - 'direnv'
+      - 'hub'
       state: 'latest'
 
   - name: '1password-cli'
