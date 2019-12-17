@@ -1,7 +1,7 @@
 ---
 - hosts: 'all'
   vars:
-    bin: '{{ ansible_env.PWD }}/bin'
+    bin: '{{ ansible_env.PWD }}/apps/bin'
     install: '{{ ansible_env.PWD }}/install'
     cellar: '/home/linuxbrew/.linuxbrew/Cellar'
     config: '{{ ansible_env.PWD }}/config'
@@ -75,6 +75,11 @@
     shell: '{{ install }}/1password-cli.bash'
     register: 'op_shell'
     changed_when: '"already installed" not in op_shell.stdout'
+
+  - name: 'goland'
+    shell: '{{ install }}/goland.bash'
+    register: 'goland_shell'
+    changed_when: '"already installed" not in goland_shell.stdout'
 
   - name: 'golangci-lint'
     shell: '{{ install }}/golangci-lint.bash'

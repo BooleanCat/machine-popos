@@ -6,5 +6,5 @@ if [[ "$( docker-compose -v )" =~ '1.25.0' ]]; then
   exit 0
 fi
 
-curl -L --silent "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$( uname -s )-$( uname -m )" -o bin/docker-compose
-chmod +rx bin/docker-compose
+curl -L --silent "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$( uname -s )-$( uname -m )" -o apps/bin/docker-compose
+chmod +rx apps/bin/docker-compose
