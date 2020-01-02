@@ -89,6 +89,16 @@
     register: 'fish_omf_install_shell'
     changed_when: '"already installed" not in fish_omf_install_shell.stderr'
     with_items: ['clearance', 'bass']
+  - name: 'fish: shells'
+    lineinfile:
+      path: '/etc/shells'
+      line: '/home/linuxbrew/.linuxbrew/bin/fish'
+    become: true
+  - name: 'fish: default shell'
+    user:
+      name: '{{ ansible_user_id }}'
+      shell: '/home/linuxbrew/.linuxbrew/bin/fish'
+    become: true
 
   - name: '1password-cli'
     shell: '{{ install }}/1password-cli.bash'
