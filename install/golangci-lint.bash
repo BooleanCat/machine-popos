@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ "$( golangci-lint --version )" =~ '1.21.0' ]]; then
+if [[ "$( golangci-lint --version )" =~ '1.22.2' ]]; then
   echo 'already installed'
   exit 0
 fi
