@@ -129,7 +129,7 @@
 #    - 'export GOROOT="{{ cellar }}/go/$( go version | rg -o "1\.\d+(\.\d+)?" )/libexec"'
     - 'set -Ux GOPATH $HOME/go'
     - 'set PATH $GOPATH/bin $PATH'
-#    - 'eval "$( direnv hook bash )"'
+    - 'direnv hook fish | source'
     
   - name: 'git: config'
     ini_file:
