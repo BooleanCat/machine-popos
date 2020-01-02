@@ -69,7 +69,26 @@
       - 'luarocks'
       - 'direnv'
       - 'hub'
+      - 'fish'
       state: 'latest'
+
+  - name: 'fish: oh-my-fish'
+    shell: '{{ install }}/omf.bash'
+    register: 'fish_omf_shell'
+    changed_when: '"already installed" not in fish_omf_shell.stdout'
+  - name: 'fish: oh-my-fish update'
+    shell: 'omf update'
+    args:
+      executable: 'fish'
+    register: 'fish_omf_update_shell'
+    changed_when: '"already up-to-date" not in fish_omf_update_shell.stdout'
+  - name: 'fish: oh-my-fish plugins'
+    shell: 'omf install {{ item }}'
+    args:
+      executable: 'fish'
+    register: 'fish_omf_install_shell'
+    changed_when: '"already installed" not in fish_omf_install_shell.stderr'
+    with_items: ['clearance', 'bass']
 
   - name: '1password-cli'
     shell: '{{ install }}/1password-cli.bash'
@@ -98,6 +117,19 @@
     - 'export GOPATH="${HOME}/go"'
     - 'export PATH="${GOPATH}/bin:${PATH}"'
     - 'eval "$( direnv hook bash )"'
+  - name: 'env: fish'
+    lineinfile:
+      path: '~/.config/fish/config.fish'
+      line: '{{ item }}'
+      create: true
+    with_items:
+    - 'set PATH {{ bin }} $PATH'
+    - 'set PATH /home/linuxbrew/.linuxbrew/bin $PATH'
+    - 'set -Ux EDITOR nvim'
+#    - 'export GOROOT="{{ cellar }}/go/$( go version | rg -o "1\.\d+(\.\d+)?" )/libexec"'
+    - 'set -Ux GOPATH $HOME/go'
+    - 'set PATH $GOPATH/bin $PATH'
+#    - 'eval "$( direnv hook bash )"'
     
   - name: 'git: config'
     ini_file:
