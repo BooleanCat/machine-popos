@@ -126,7 +126,7 @@
     - 'set PATH {{ bin }} $PATH'
     - 'set PATH /home/linuxbrew/.linuxbrew/bin $PATH'
     - 'set -Ux EDITOR nvim'
-#    - 'export GOROOT="{{ cellar }}/go/$( go version | rg -o "1\.\d+(\.\d+)?" )/libexec"'
+    - 'set -Ux GOROOT {{ cellar }}/go/(go version | rg -o "1\.\d+(\.\d+)?")/libexec'
     - 'set -Ux GOPATH $HOME/go'
     - 'set PATH $GOPATH/bin $PATH'
     - 'direnv hook fish | source'
