@@ -115,6 +115,21 @@
     register: 'golangci_lint_shell'
     changed_when: '"already installed" not in golangci_lint_shell.stdout'
 
+  - name: 'spotify: key'
+    apt_key:
+      url: 'https://download.spotify.com/debian/pubkey.gpg'
+    become: true
+  - name: 'spotify: repository'
+    apt_repository:
+      repo: 'deb http://repository.spotify.com stable non-free'
+      update_cache: true
+    become: true
+  - name: 'spotify'
+    apt:
+      name: 'spotify-client'
+      state: 'latest'
+    become: true
+
   - name: 'env: bash'
     lineinfile:
       path: '~/.bashrc'
