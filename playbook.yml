@@ -15,6 +15,7 @@
     apt:
       name:
       - 'ssh-askpass'
+      - 'browser-plugin-freshplayer-pepperflash'
       state: 'latest'
     become: true
 
@@ -58,11 +59,13 @@
       name:
       - 'gcc'
       - 'jq'
+      - 'awscli'
       - 'ansible'
       - 'neovim'
       - 'shellcheck'
       - 'tmux'
       - 'ripgrep'
+      - 'bat'
       - 'go'
       - 'rustup-init'
       - 'lua'
