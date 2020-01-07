@@ -145,6 +145,7 @@
     - 'export GOPATH="${HOME}/go"'
     - 'export PATH="${GOPATH}/bin:${PATH}"'
     - 'eval "$( direnv hook bash )"'
+    - 'source "{{ config }}/.bashrc-extra"'
   - name: 'env: fish'
     lineinfile:
       path: '~/.config/fish/config.fish'
@@ -158,6 +159,7 @@
     - 'set -Ux GOPATH $HOME/go'
     - 'set PATH $GOPATH/bin $PATH'
     - 'direnv hook fish | source'
+    - 'source {{ config }}/config-extra.fish'
     
   - name: 'git: config'
     ini_file:

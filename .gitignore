@@ -1,2 +1,4 @@
 download/
 apps/
+config/.bashrc-extra
+config/config-extra.fish
