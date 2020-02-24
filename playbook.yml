@@ -7,8 +7,7 @@
     config: '{{ ansible_env.PWD }}/config'
   tasks:
   - name: 'apt: update'
-    apt:
-      update_cache: true
+    apt: {update_cache: true}
     become: true
 
   - name: 'apt: install'
@@ -54,6 +53,20 @@
       append: true
     become: true
 
+  - name: 'atom: key'
+    apt_key: {url: 'https://packagecloud.io/AtomEditor/atom/gpgkey'}
+    become: true
+  - name: 'atom: repository'
+    apt_repository:
+      repo: 'deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main'
+      update_cache: true
+    become: true
+  - name: 'atom'
+    apt:
+      name: 'atom'
+      state: 'latest'
+    become: true
+
   - name: 'brew: install'
     homebrew:
       name:
@@ -81,14 +94,12 @@
     changed_when: '"already installed" not in fish_omf_shell.stdout'
   - name: 'fish: oh-my-fish update'
     shell: 'omf update'
-    args:
-      executable: 'fish'
+    args: {executable: 'fish'}
     register: 'fish_omf_update_shell'
     changed_when: '"already up-to-date" not in fish_omf_update_shell.stdout'
   - name: 'fish: oh-my-fish plugins'
     shell: 'omf install {{ item }}'
-    args:
-      executable: 'fish'
+    args: {executable: 'fish'}
     register: 'fish_omf_install_shell'
     changed_when: '"already installed" not in fish_omf_install_shell.stderr'
     with_items: ['clearance', 'bass']
@@ -119,8 +130,7 @@
     changed_when: '"already installed" not in golangci_lint_shell.stdout'
 
   - name: 'spotify: key'
-    apt_key:
-      url: 'https://download.spotify.com/debian/pubkey.gpg'
+    apt_key: {url: 'https://download.spotify.com/debian/pubkey.gpg'}
     become: true
   - name: 'spotify: repository'
     apt_repository:
