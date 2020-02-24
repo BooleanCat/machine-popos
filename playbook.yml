@@ -86,6 +86,7 @@
       - 'direnv'
       - 'hub'
       - 'fish'
+      - 'bats'
       state: 'latest'
 
   - name: 'fish: oh-my-fish'
