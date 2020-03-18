@@ -75,6 +75,7 @@
   - name: 'vscode: repository'
     apt_repository:
       repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main'
+      filename: 'vscode'
       update_cache: true
     become: true
   - name: 'vscode'
