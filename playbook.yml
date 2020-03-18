@@ -101,7 +101,6 @@
       - 'lua'
       - 'luarocks'
       - 'direnv'
-      - 'hub'
       - 'fish'
       - 'bats'
       state: 'latest'
