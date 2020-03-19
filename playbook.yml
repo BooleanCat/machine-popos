@@ -84,6 +84,14 @@
       state: 'latest'
     become: true
 
+  - name: 'slack'
+    apt: {deb: 'https://downloads.slack-edge.com/linux_releases/slack-desktop-4.3.2-amd64.deb'}
+    become: true
+
+  - name: 'zoom'
+    apt: {deb: 'https://zoom.us/client/latest/zoom_amd64.deb'}
+    become: true
+
   - name: 'brew: install'
     homebrew:
       name:
